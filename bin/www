@@ -1,0 +1,101 @@
+#!/usr/bin/env no
+
+// ?=========================================================================
+// ? SERVIDOR WEB
+// ?=========================================================================
+const app = require('../app');
+const debug = require('debug')('NodeWebAPISite:server');
+const http = require('http');
+
+// Swagger
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../swagger_output.json')
+
+// * RECUPERA A PORTA DO AMBIENTE E GUARDA NO EXPRESS (PORTA DEFAULT:3000)
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+// //----------------------------------------------------------------------------------------------------------
+// // Leitura dos certificados da maquina (variavel de sistema __dirname para caminho relativo completo)
+// //----------------------------------------------------------------------------------------------------------
+// var path = require('path');
+// const options = {
+//     key: fs.readFileSync(__dirname + '/certificate/selfsigned.key'),
+//     cert: fs.readFileSync(__dirname + '/certificate/selfsigned.crt')
+// };
+
+
+// * CRIA UM SERVIDOR HTTP
+var server = http.createServer(app);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
+// * SETA O SERVIDOR PARA FICAR ESCUTANDO TODAS AS INTERFACES DE REDE NA PORTA ESCOLHIDA
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+const bar = "=";
+console.log('');
+console.log(`API rodando na porta: ${app.get('port')} [3000 é a porta default]`);
+console.log(bar.repeat(80));
+console.log('Caso os endpoints sejam alterados:');
+console.log('utilize: [ npm run swagger-autogen ] para gerar a documentação do Swagger');
+console.log(bar.repeat(80));
+console.log(`Documentacao.: http://localhost:${app.get('port')}/api-docs/swagger/`);
+console.log('');
+console.log(`Endpoints....: http://localhost:${app.get('port')}/api/jsonFileUpload`);
+
+// ? ===========================================================================================
+// ? FUNCOES DE APOIO
+// ? ===========================================================================================
+
+
+// *NORMALIZA A PORTA RETORNADA PELO AMBIENTE ME NUMBER, STRING OR FALSE
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
+
+// * LISTNER QUE FICA ESCUTANDO OS EVENTOS DE "ERROR" EM SERVER E PODE TRATA-LOS
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+
+    // ? MENSAGENS AMIGAVEIS
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+// * LISTNER PARA ESCUTAR OS EVENTOS DO SERVIDOR HTTP
+function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+}

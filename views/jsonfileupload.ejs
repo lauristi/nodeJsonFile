@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload de Arquivo</title>
+</head>
+<body>
+  <h1>Upload de Arquivo</h1>
+  
+  <!-- File loader -->
+  <input type="file" id="fileInput">
+  
+  <!-- Botão de envio -->
+  <button onclick="carregaArquivo()">Enviar</button>
+  
+  <!-- Ajax loader -->
+  <div id="ajaxLoader" style="display: none;">
+    Carregando...
+  </div>
+  
+  <!-- Scripts -->
+  <script src="/public/javascripts/axios.min.js"></script>
+  <script src="/public/javascripts/jsonFileUploadScripts.js"></script>
+</body>
+</html>
