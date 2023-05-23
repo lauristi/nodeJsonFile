@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["types/*"]
+    }
+  },
+  "include": ["src"]
+}
+
+
+Para o dotenv, você precisa adicionar a configuração "types": ["node"] às opções do compilador.
+
+
+Este arquivo tsconfig.json contém algumas configurações importantes:
+
+"target": "es6" especifica que o código TypeScript será transpilado para a versão ECMAScript 6.
+"module": "esnext" indica que o módulo será resolvido usando a sintaxe import e export.
+"lib": ["dom", "dom.iterable", "esnext"] adiciona as bibliotecas necessárias para o ambiente DOM e suporte a iteradores.
+"allowJs": true permite a inclusão de arquivos JavaScript no projeto.
+"jsx": "react" informa ao TypeScript que estamos usando JSX no projeto.
+"sourceMap": true habilita a geração de arquivos de mapa de origem para facilitar a depuração.
+"strict": true habilita opções de verificação de tipo estritas.
+"esModuleInterop": true permite importar módulos usando a sintaxe import * as React from 'react'.
+"experimentalDecorators": true e "emitDecoratorMetadata": true habilitam suporte para decoradores.
+"moduleResolution": "node" especifica a resolução de módulos seguindo as regras do Node.js.
+"baseUrl": "./src" define o diretório base para a resolução de caminhos de importação.
+"paths": { "*": ["types/*"] } permite a resolução de caminhos de importação personalizados, por exemplo, import MyComponent from 'components/MyComponent'.
+Por fim, a seção "include": ["src"] especifica quais arquivos e diretórios devem ser incluídos na compilação.
+
+
+
+Para um projeto com type script, axios bootstrap e dotenv, instale as dependncias:
+
+
+npm install axios @types/axios dotenv @types/node bootstrap @types/bootstrap
