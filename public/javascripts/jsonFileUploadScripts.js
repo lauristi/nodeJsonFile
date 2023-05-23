@@ -37,7 +37,7 @@ function converteArquivo(file) {
   async function enviaArquivo(arquivoJSON) {
     try {
       // Envia a requisição POST para o endpoint '/jsonFile' com o JSON do arquivo
-      const response = await axios.post('/jsonFile', arquivoJSON);
+      const response = await axios.post('/api/jsonFileUpload', arquivoJSON);
       console.log(response.data);
     } catch (error) {
       console.error(error);
