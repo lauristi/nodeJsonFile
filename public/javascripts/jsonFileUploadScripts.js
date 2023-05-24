@@ -50,7 +50,7 @@ async function enviaArquivo(arquivoJSON) {
       downloadFile(response.data, `${arquivoJSON.nome}`,downloadMode);
 
     } catch (error) {
-        console.error(error);
+        console.error(`From: enviaArquivo | ${error}`);
     }
 }
 
@@ -62,8 +62,9 @@ function carregaArquivo() {
     // Chama a função converteArquivo para converter o arquivo em um objeto JSON
      converteArquivo(file)
             .then(enviaArquivo) // Chama  enviarArquivo arquivoJSON vem por callback
-           .catch(error => {console.error(error);
-    });
+           .catch(error => {
+                console.error(`From: carregaArquivo | ${error}`);
+            });
 }
 
 //? ==========================================================================
@@ -79,6 +80,8 @@ function exibeAjaxLoader(mostrar) {
 //# Recria o arquivo através do conteudo retornado. Remontando o arquivo txt
 function downloadFile(data, fileName,downloadMode) {
 
+try {
+    
   //01 Cria um objeto Blob com o conteúdo do arquivo
   const blob = new Blob([data], {type: 'text/plain'});
 
@@ -90,17 +93,19 @@ function downloadFile(data, fileName,downloadMode) {
   //# para download imediato
 
   const hiperlink = document.createElement('a');
- 
-  hiperlink.href = url;
-  hiperlink.download = fileName;
+        hiperlink.href = url;
+        hiperlink.download = fileName;
   
   if(downloadMode == "direct"){
-        hiperlink.click();  
+         hiperlink.click();  
         //Elimino a URL temporaria
         window.URL.revokeObjectURL(url);
     }else{
         hiperlink.textContent = `Clique para baixar o novo arquivo: ${arquivoJSON.nome}`;
         document.body.appendChild(hiperlink);
   }
+} catch (error) {
+    console.error(`From: downloadFile | ${error}`);
+} 
   
 }

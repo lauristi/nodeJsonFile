@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class BancoComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      codigo: '',
+      dados: null
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({ codigo: event.target.value });
+  }
+
+  handleClick = () => {
+    axios.get(`https://nodewebapi.onrender.com/api/brasilApi/banco/${this.state.codigo}`)
+      .then((response) => {
+        this.setState({ dados: response.data });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <label htmlFor="codigo">Código:</label>
+        <input type="number" id="codigo" name="codigo" value={this.state.codigo} onChange={this.handleChange} />
+        <button onClick={this.handleClick}>Buscar</button>
+        {this.state.dados && (
+          <div>
+            <p>Nome: {this.state.dados.nome}</p>
+            <p>Código: {this.state.dados.codigo}</p>
+            {/* Adicione outras propriedades que deseja exibir */}
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default BancoComponent;

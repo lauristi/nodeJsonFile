@@ -36,7 +36,7 @@ exports.postFileJSON = async (req, res, next) => {
         // Decodifica o conteúdo base64 para uma string
         const conteudoString = Buffer.from(conteudoBase64, 'base64').toString('utf-8');
 
-        // Aqui você pode manipular a string como desejar
+        //? Aqui você pode manipular a string como desejar
         const conteudoManipulado = processaConteudo(conteudoString);
 
         // Cria o caminho do arquivo temporário
@@ -62,7 +62,9 @@ exports.postFileJSON = async (req, res, next) => {
                 console.log(`${filePath} Original gerado com sucesso`  )
             }
         });
-
+        
+        //Remove o arquivo de temp
+        //fs.unlink(filePath);
 
     } catch (error) {
         console.error(utils.endpointError(error));

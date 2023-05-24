@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="/stylesheets/jsonFileUpload.css">
 <head>
   <title>Upload de Arquivo</title>
 </head>
@@ -10,18 +11,16 @@
   <input type="file" id="fileInput">
   
   <!-- Botão de envio -->
-  <p></p>
   <button onclick="carregaArquivo()">Processar</button>
-   
-  
+    
   <!-- Ajax loader -->
   <div id="ajaxLoader" style="display: none;">
     Carregando...
   </div>
   
   <!-- Scripts -->
-  <!-- <script src="/Javascripts/axios.min.js"></script> -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/javascripts/jsonFileUploadScripts.js"></script>
+
 </body>
 </html>

@@ -46,7 +46,7 @@ console.log('utilize: [ npm run swagger-autogen ] para gerar a documentação do
 console.log(bar.repeat(80));
 console.log(`Documentacao.: http://localhost:${app.get('port')}/api-docs/swagger/`);
 console.log('');
-console.log(`Endpoints....: http://localhost:${app.get('port')}/api/jsonFileUpload`);
+console.log(`Endpoints....: http://localhost:${app.get('port')}/api/fileUploadPage`);
 
 // ? ===========================================================================================
 // ? FUNCOES DE APOIO

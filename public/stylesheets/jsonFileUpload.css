@@ -1,7 +1,29 @@
-li:nth-child(even) {
-  background-color: lightgray;
+body {
+  background: linear-gradient(to bottom, #cccccc, #999999);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-li:nth-child(odd) {
-  background-color: white;
+h1 {
+  text-align: center;
+}
+
+#fileInput {
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+#ajaxLoader {
+  display: none;
+  margin-top: 20px;
+  text-align: center;
 }
