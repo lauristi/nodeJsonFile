@@ -27,9 +27,6 @@ exports.getHomePage = async (req, res, next) => {
 
     } catch (error) {
         console.error(utils.endpointError(error));
-
-        // Informa ao express que ocorreu e um erro
-        // e que o middleware  de tratamento de erro deve ser chamado
         next(error);
     }
 }

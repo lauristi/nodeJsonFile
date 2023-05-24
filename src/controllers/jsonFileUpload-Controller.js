@@ -2,31 +2,33 @@
 
 const express = require('express');
 const utils = require('../helpers/util');
-const processaConteudo = require('../business/processamento');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const path = require('path');
 const mime = require('mime');
+const processaConteudo = require('../business/processamento');
 
 const app = express();
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
-exports.getFileJSON = async (req, res, next) => {
+exports.getPostFilePage = async (req, res, next) => {
+    try { // renderiza a pagina 'html' index.ejs
 
-    try { // todo
+        res.render('jsonfileupload', {title: 'Express'});
 
     } catch (error) {
         console.error(utils.endpointError(error));
-        // Informa ao express que ocorreu e um erro
-        // e que o middleware  de tratamento de erro deve ser chamado
         next(error);
     }
-};
+}
 
 exports.postFileJSON = async (req, res, next) => {
-    try { // Obtém o JSON enviado pelo front-end
+    
+    //# Obtém o JSON enviado pelo front-end
+    
+    try { 
+
         const arquivoJSON = req.body;
         const nomeArquivo = arquivoJSON.nome;
         const conteudoBase64 = arquivoJSON.base64;
@@ -38,7 +40,7 @@ exports.postFileJSON = async (req, res, next) => {
         const conteudoManipulado = processaConteudo(conteudoString);
 
         // Cria o caminho do arquivo temporário
-        const filePath = path.resolve(__dirname, '..', '..', 'public', 'temp', `${nomeArquivo}.txt`);
+        const filePath = path.resolve(__dirname, '..', '..', 'public', 'temp', `${nomeArquivo}`);
 
         // Grava o conteúdo manipulado no arquivo
         fs.writeFileSync(filePath, conteudoManipulado, 'utf-8');
@@ -47,20 +49,18 @@ exports.postFileJSON = async (req, res, next) => {
         
         var mimetype = mime.getType(filePath);
 
-        res.setHeader('Content-Disposition', `attachment; filename=${nomeArquivo}.txt`);
-        //res.setHeader('Content-Type', 'application/octet-stream;charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename=${nomeArquivo}`);
         res.setHeader('Content-Length', fs.statSync(filePath).size);
+      //res.setHeader('Content-Type', 'application/octet-stream;charset=utf-8');
         res.setHeader('Content-type', mimetype);
 
         // Envia o arquivo como resposta
         res.download(filePath, function (err) {
             if (err) {
-                console.log("error");
-                console.log(err);
+                console.error(utils.endpointError(err));
             } else {
-                console.log("Sucess");
+                console.log(`${filePath} Original gerado com sucesso`  )
             }
-
         });
 
 
@@ -69,18 +69,3 @@ exports.postFileJSON = async (req, res, next) => {
         next(error);
     }
 };
-
-
-exports.getPostFilePage = async (req, res, next) => {
-    try { // renderiza a pagina 'html' index.ejs
-
-        res.render('jsonfileupload', {title: 'Express'});
-
-    } catch (error) {
-        console.error(utils.endpointError(error));
-
-        // Informa ao express que ocorreu e um erro
-        // e que o middleware  de tratamento de erro deve ser chamado
-        next(error);
-    }
-}
